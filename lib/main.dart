@@ -1,5 +1,5 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(const XylophoneApp());
@@ -7,90 +7,45 @@ void main() => runApp(const XylophoneApp());
 class XylophoneApp extends StatelessWidget {
   const XylophoneApp({Key? key}) : super(key: key);
 
+  void playSound(int soundNumber) {
+    final AudioCache audioCache = AudioCache();
+    audioCache.play('note$soundNumber.wav');
+  }
+
+  Expanded buildKey({required int soundNumber, required Color color}) {
+    return Expanded(
+      child: TextButton(
+        onPressed: () {
+          playSound(soundNumber);
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: color,
+        ),
+        child: const FractionallySizedBox(
+          widthFactor: 100.0,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Center(
-            child: Column(children: <Widget>[
-              Expanded(
-                  child: TextButton(
-                onPressed: () {
-                  AudioCache audioCache = AudioCache();
-                  audioCache.play('note1.wav');
-                },
-                child: Container(
-                  color: Colors.red,
-                ),
-              )),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    AudioCache audioCache = AudioCache();
-                    audioCache.play('note2.wav');
-                  },
-                  child: Container(
-                    color: Colors.orange,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    AudioCache audioCache = AudioCache();
-                    audioCache.play('note3.wav');
-                  },
-                  child: Container(
-                    color: Colors.yellow,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    AudioCache audioCache = AudioCache();
-                    audioCache.play('note4.wav');
-                  },
-                  child: Container(
-                    color: Colors.green,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    AudioCache audioCache = AudioCache();
-                    audioCache.play('note5.wav');
-                  },
-                  child: Container(
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    AudioCache audioCache = AudioCache();
-                    audioCache.play('note6.wav');
-                  },
-                  child: Container(
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    AudioCache audioCache = AudioCache();
-                    audioCache.play('note7.wav');
-                  },
-                  child: Container(
-                    color: Colors.purple,
-                  ),
-                ),
-              ),
-            ]),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  buildKey(soundNumber: 1, color: Colors.red),
+                  buildKey(soundNumber: 2, color: Colors.orange),
+                  buildKey(soundNumber: 3, color: Colors.yellow),
+                  buildKey(soundNumber: 4, color: Colors.green),
+                  buildKey(soundNumber: 5, color: Colors.blue),
+                  buildKey(soundNumber: 6, color: Colors.teal),
+                  buildKey(soundNumber: 7, color: Colors.purple),
+                ]),
           ),
         ),
       ),
